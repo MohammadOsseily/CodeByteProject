@@ -128,64 +128,89 @@ const articles = [
   ];
   
  
-const SearchBox = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-
-  const handleSearch = (e) => {
-    const searchTerm = e.target.value.toLowerCase();
-    setSearchTerm(searchTerm);
-
-    // Filter articles based on the search term
-    const filteredResults = articles.filter((article) =>
-      article.title.toLowerCase().includes(searchTerm) ||
-      article.content.toLowerCase().includes(searchTerm) ||
-      article.date.toLowerCase().includes(searchTerm)
-    );
-
-    setSearchResults(filteredResults);
-  };
-
-  return (
-    <div>
-      <input
-        type="text"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={handleSearch}
-      />
-
-      
-
-      <ul>
-        {searchResults.map((result) => (
-          <li key={result.id}>
-            <div className='text-lg'><span className='font-bold mt-8'>{searchResults.length} posts</span> were found.</div>
-            <div
-            className='text-2xl pb-1 font-bold'
-             dangerouslySetInnerHTML={{
-              __html: result.title.replace(
-                new RegExp(`(${searchTerm})`, 'gi'),
-                (match) => `<span class="bg-yellow-200">${match}</span>`
-              )
-            }} />
+  const SearchBox = () => {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+  
+    const handleSearch = (e) => {
+      const searchTerm = e.target.value.toLowerCase();
+      setSearchTerm(searchTerm);
+  
+      // Filter articles based on the search term
+      const filteredResults = articles.filter((article) =>
+        article.title.toLowerCase().includes(searchTerm) ||
+        article.content.toLowerCase().includes(searchTerm) ||
+        article.date.toLowerCase().includes(searchTerm)
+      );
+  
+      setSearchResults(filteredResults);
+    };
+  
+    const handleClear = () => {
+      setSearchTerm('');
+      setSearchResults([]);
+    };
+  
+    return (
+      <div className="relative">
+      <div className='text-4xl font-semibold mb-14'>Search</div>
+        <div className="flex items-center">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={handleSearch}
+            className="px-2 py-1 ml-2 w-2/4  border-[3px]  border-gray-400"
             
-            <div className='pb-4 text-lg'>{result.date}</div>
-            <div
-            className='text-xl pb-8'
-             dangerouslySetInnerHTML={{
-              __html: result.content.replace(
-                new RegExp(`(${searchTerm})`, 'gi'),
-                (match) => `<span class="bg-yellow-200">${match}</span>`
-              )
-            }} />
-
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-export default SearchBox;
+          />
+          {searchTerm && (
+            <button
+              onClick={handleClear}
+              className="ml-2 bg-gray-400 px-2 py-1 rounded-xl"
+            >
+              Clear
+            </button>
+          )}
+          
+        </div>
+  
+        {searchResults.length > 0 && (
+          <div className='text-lg mt-8 mb-14'>
+            <span className='font-bold'>{searchResults.length} posts</span> were found.
+          </div>
+        )}
+  
+        <ul>
+          {searchResults.map((result) => (
+            <li key={result.id}>
+              <div
+                className='text-2xl pb-1 font-bold'
+                dangerouslySetInnerHTML={{
+                  __html: result.title.replace(
+                    new RegExp(`(${searchTerm})`, 'gi'),
+                    (match) => `<span class="bg-yellow-200">${match}</span>`
+                  )
+                }}
+              />
+              
+              <div className='pb-4 text-lg'>{result.date}</div>
+              <div
+                className='text-xl pb-8'
+                dangerouslySetInnerHTML={{
+                  __html: result.content.replace(
+                    new RegExp(`(${searchTerm})`, 'gi'),
+                    (match) => `<span class="bg-yellow-200">${match}</span>`
+                  )
+                }}
+              />
+              <hr className='border-[3px] border-gray-200 w-2/4 mb-10 '/>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+  
+  export default SearchBox;
+  
 
