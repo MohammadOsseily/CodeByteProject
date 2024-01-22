@@ -1,10 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 
-// Array of articles with date
-// ... (previous code)
 
-// ... (previous code)
 
 const articles = [
     {
@@ -127,15 +124,10 @@ const articles = [
       content: 'React Server Components are a new way to build UIs that can seamlessly render on the server and the client.',
       date: 'Aug 20, 2023',
     },
-    // Add more articles as needed
+    
   ];
   
-  // ... (rest of the code)
-  
-  
  
-  
-
 const SearchBox = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -177,9 +169,8 @@ const SearchBox = () => {
                 (match) => `<span class="bg-yellow-200">${match}</span>`
               )
             }} />
-            {/* Display date */}
+            
             <div className='pb-4 text-lg'>{result.date}</div>
-            {/* Highlight matching text in the content with yellow color */}
             <div
             className='text-xl pb-8'
              dangerouslySetInnerHTML={{
@@ -188,6 +179,7 @@ const SearchBox = () => {
                 (match) => `<span class="bg-yellow-200">${match}</span>`
               )
             }} />
+
           </li>
         ))}
       </ul>
